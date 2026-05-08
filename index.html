@@ -339,6 +339,9 @@
         .sr-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--tx); margin-bottom: 4px; }
         .sr-preview { font-family: 'Lora', serif; font-style: italic; font-size: 0.9rem; color: var(--tm); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+        /* ── READING PROGRESS BAR ── */
+        #readProgress { position: fixed; top: 0; left: 0; height: 2px; width: 0%; background: var(--gold-grad); background-size: 200% auto; animation: shimmer 4s linear infinite; z-index: 9999; transition: width 0.1s linear; pointer-events: none; }
+
         /* ── TOAST ── */
         .toast { position: fixed; bottom: 30px; right: 30px; background: var(--gold-grad); background-size: 200% auto; animation: shimmer 6s linear infinite; color: #000; padding: 12px 24px; font-family: 'DM Sans', sans-serif; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 30px; z-index: 9990; opacity: 0; transform: translateY(15px); transition: all 0.4s ease; pointer-events: none; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2); }
         .toast.show { opacity: 1; transform: translateY(0); }
@@ -347,9 +350,83 @@
         footer { border-top: 1px solid var(--rule); padding: 40px; text-align: center; background: var(--bg); position: relative; z-index: 2; }
         .f-text { font-family: 'DM Sans', sans-serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--tf); }
 
+        /* ── HERO CANVAS PARTICLES ── */
+        #heroCanvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.45; }
+        #s-home { overflow: hidden; }
+        #s-home .sec { position: relative; z-index: 2; }
+
+        /* ── ENHANCED FRAGMENT CARDS ── */
+        .frag-card { position: relative; overflow: hidden; }
+        .frag-card::after { content: '\2736'; position: absolute; top: 12px; right: 14px; font-size: 0.5rem; color: var(--gold); opacity: 0; transition: opacity 0.3s; }
+        .frag-card:hover::after { opacity: 0.6; }
+
+        /* ── POEM VAULT CARDS ── */
+        .pvc-num { position: absolute; top: 14px; right: 18px; font-family: 'DM Sans', sans-serif; font-size: 0.5rem; letter-spacing: 0.2em; color: var(--tf); }
+
+        /* ── ENHANCED POEM READER ── */
+        .poem-reader { background: #0e1114; }
+        .pr-ambient { position: fixed; inset: 0; background: radial-gradient(circle at 30% 40%, rgba(212,175,55,0.04), transparent 60%), radial-gradient(circle at 70% 70%, rgba(100,80,30,0.05), transparent 50%); pointer-events: none; z-index: 0; }
+        .pr-content { position: relative; z-index: 1; }
+        .pr-nav { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 6002; }
+        .pr-nav button { background: rgba(255,255,255,0.04); border: 1px solid var(--rule); color: var(--tm); font-family: 'DM Sans', sans-serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 10px 20px; border-radius: 30px; cursor: pointer; transition: all 0.3s; backdrop-filter: blur(8px); }
+        .pr-nav button:hover { border-color: var(--gold); color: var(--gold); background: rgba(212,175,55,0.06); }
+
+        /* ── ESSAY MODAL TOP LINE ── */
+        #rdModal::before { content: ''; position: fixed; top: 0; left: 0; right: 0; height: 1px; background: var(--gold-grad); background-size: 200% auto; animation: shimmer 4s linear infinite; z-index: 2002; }
+        .rd-body p { transition: color 0.3s; }
+        .rd-body p:hover { color: var(--tx); }
+        .rd-pull { background: rgba(212,175,55,0.04); border-radius: 0 8px 8px 0; padding: 24px 24px 24px 32px; }
+
+        /* ── STAT CELLS ── */
+        .stat-cell { transition: all 0.3s; cursor: default; }
+        .stat-cell:hover { border-color: rgba(212,175,55,0.4); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+
+        /* ── MEM CARD ── */
+        .mem-card { transition: all 0.3s; }
+        .mem-card:hover { border-color: rgba(212,175,55,0.3); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .mem-dot { display: none; }
+
+        /* ── REACH CARDS ── */
+        .r-card { overflow: hidden; }
+        .r-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--gold-grad); background-size: 200% auto; animation: shimmer 6s linear infinite; transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+        .r-card:hover::after { transform: scaleX(1); }
+
+        /* ── FEED ITEMS ── */
+        .e-item { transition: all 0.3s; }
+        .e-item:hover { border-color: rgba(212,175,55,0.25); transform: translateX(4px); }
+
+        /* ── NAV SCROLL ── */
+        #nav.scrolled { background: rgba(27,32,36,0.97); box-shadow: 0 4px 30px rgba(0,0,0,0.4); }
+
+        /* ── SECTION ENTRANCE ── */
+        section.show { animation: sectionIn 0.7s cubic-bezier(0.16,1,0.3,1); }
+        @keyframes sectionIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ── SCROLL HINT ── */
+        .scroll-hint { position: absolute; bottom: 44px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; animation: breathe 3s ease-in-out infinite; z-index: 2; }
+        .scroll-hint span { font-family: 'DM Sans', sans-serif; font-size: 0.48rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--tf); }
+        .scroll-hint svg { width: 14px; height: 20px; stroke: var(--gold); fill: none; opacity: 0.6; }
+        @keyframes breathe { 0%,100%{opacity:0.4;transform:translateX(-50%) translateY(0)} 50%{opacity:0.8;transform:translateX(-50%) translateY(5px)} }
+
+        /* ── BOOK COVER PLACEHOLDER ── */
+        .book-cov-ph { display: none; width: 100%; height: 230px; align-items: center; justify-content: center; font-size: 2rem; color: rgba(212,175,55,0.2); background: var(--bg2); }
+
+        /* ── SCI FACT ACCENT ── */
+        .sci-fact { position: relative; overflow: hidden; }
+        .sci-fact::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold-grad); background-size: 200% auto; animation: shimmer 6s linear infinite; transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
+        .sci-fact:hover::before { transform: scaleX(1); }
+
+        /* ── WORD HOVER IN POEM READER ── */
+        .pr-body .word { transition: color 0.15s; cursor: default; display: inline; }
+        .pr-body .word:hover { color: var(--gold-light); }
+
+        /* ── AMBIENT ORBS ── */
+        .site-orb { position: fixed; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
+
         /* ── ANIMATIONS & RESPONSIVE ── */
-        .rev { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .rev { opacity: 0; transform: translateY(24px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
         .rev.vis { opacity: 1; transform: translateY(0); }
+        .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.18s; } .d3 { transition-delay: 0.28s; } .d4 { transition-delay: 0.38s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         @media(max-width: 900px) {
@@ -368,7 +445,10 @@
     </style>
 </head>
 <body>
+    <div id="readProgress"></div>
     <div id="dot"></div>
+    <div class="site-orb" style="width:600px;height:600px;top:-200px;right:-150px;background:radial-gradient(circle,rgba(212,175,55,0.05) 0%,transparent 70%);"></div>
+    <div class="site-orb" style="width:400px;height:400px;bottom:10%;left:-100px;background:radial-gradient(circle,rgba(212,175,55,0.04) 0%,transparent 70%);"></div>
     <div id="ring"></div>
     
     <div id="searchOverlay">
@@ -412,6 +492,7 @@
     </div>
 
     <section id="s-home" class="show">
+        <canvas id="heroCanvas"></canvas>
         <div class="hero-orb"></div>
         <div class="sec">
             <span class="eyebrow rev metallic-text">Kashmir · Writer · Observer</span>
@@ -421,6 +502,10 @@
                 <button class="btn btn-solid" onclick="goTo('about')">Enter</button>
                 <button class="btn btn-outline" onclick="goTo('writing')">Read the Writing</button>
             </div>
+        </div>
+        <div class="scroll-hint">
+            <span>Scroll</span>
+            <svg viewBox="0 0 14 22"><rect x="5" y="2" width="4" height="8" rx="2" stroke-width="1.5"/><line x1="7" y1="14" x2="7" y2="20" stroke-width="1.5"/><polyline points="4,17 7,20 10,17" stroke-width="1.5"/></svg>
         </div>
     </section>
 
@@ -731,17 +816,26 @@
     </div>
 
     <div class="poem-reader" id="poemReader">
-        <button class="pr-close" onclick="closePoemReader()">✕ Return to Archives</button>
+        <div class="pr-ambient"></div>
+        <button class="pr-close" onclick="closePoemReader()">✕ Return</button>
         <div class="pr-content">
             <p class="pr-title metallic-text" id="prTitle"></p>
             <div class="pr-body" id="prBody"></div>
+        </div>
+        <div class="pr-nav">
+            <button onclick="prevPoem()">← Prev</button>
+            <button onclick="nextPoem()">Next →</button>
         </div>
     </div>
 
     <div class="toast" id="toast"></div>
     
     <footer>
-        <span class="f-text">Hashmatullah Reyaz Malik &nbsp;·&nbsp; All copyrights reserved &nbsp;·&nbsp; <span id="yr"></span></span>
+        <div style="margin-bottom:20px;">
+            <button onclick="goTo('home')" style="background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--tf);transition:color 0.3s;padding:8px 16px;border-radius:20px;border:1px solid transparent;" onmouseover="this.style.color='var(--gold)';this.style.borderColor='rgba(212,175,55,0.3)'" onmouseout="this.style.color='var(--tf)';this.style.borderColor='transparent'">↑ Return to Beginning</button>
+        </div>
+        <span class="f-text">Hashmatullah Reyaz Malik &nbsp;·&nbsp; Kashmir &nbsp;·&nbsp; All rights reserved &nbsp;·&nbsp; <span id="yr"></span></span>
+        <div style="margin-top:14px;font-family:'Lora',serif;font-style:italic;font-size:0.75rem;color:rgba(106,114,121,0.5);">"A mind reaching outward before the moment disappears."</div>
     </footer>
 
     <script>
@@ -923,6 +1017,7 @@
                 const icon = ICONS[i % ICONS.length];
                 return `
                 <div class="poem-vault-card" onclick="openPoemReader(${i})">
+                    <span class="pvc-num">${String(i+1).padStart(2,'0')}</span>
                     <div class="poem-logo">${icon}</div>
                     <h3 class="poem-vault-title">${p.title}</h3>
                     <p class="poem-vault-preview">${p.body.substring(0, 90)}…</p>
@@ -954,6 +1049,39 @@
             `).join('');
         }
 
+        /* ── ANIMATED STAT COUNTER ── */
+        function animateCount(el, target) {
+            const start = 0;
+            const duration = 1800;
+            const startTime = performance.now();
+            function step(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.round(eased * target);
+                if (progress < 1) requestAnimationFrame(step);
+                else el.textContent = target;
+            }
+            requestAnimationFrame(step);
+        }
+        window._statsAnimated = false;
+        function maybeAnimateStats() {
+            if (window._statsAnimated) return;
+            const row = document.querySelector('.stats-row');
+            if (!row) return;
+            const rect = row.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 50) {
+                window._statsAnimated = true;
+                ['tC','pC'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el && !isNaN(parseInt(el.textContent))) {
+                        animateCount(el, parseInt(el.textContent));
+                    }
+                });
+            }
+        }
+        window.addEventListener('scroll', maybeAnimateStats, { passive: true });
+
         /* ── MODAL INTERACTIONS ── */
         // Limerent Misery Essay
         function openRd() { document.getElementById('rdModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
@@ -972,15 +1100,19 @@
         }
         function closeGenericModal() { document.getElementById('genericModal').classList.remove('open'); document.body.style.overflow = ''; }
         
-        // Immersive Poetry Reader
+        // Immersive Poetry Reader — enhanced version defined after DOMContentLoaded
         function openPoemReader(i) {
+            window._currentPoemIdx = i;
             const p = POEMS[i];
             document.getElementById('prTitle').textContent = p.title;
-            document.getElementById('prBody').textContent = p.body;
+            const words = p.body.split(' ').map(w => `<span class="word">${w}</span>`).join(' ');
+            document.getElementById('prBody').innerHTML = words;
             document.getElementById('poemReader').classList.add('open');
             document.body.style.overflow = 'hidden';
         }
         function closePoemReader() { document.getElementById('poemReader').classList.remove('open'); document.body.style.overflow = ''; }
+        window.prevPoem = function() { openPoemReader(((window._currentPoemIdx||0) - 1 + POEMS.length) % POEMS.length); };
+        window.nextPoem = function() { openPoemReader(((window._currentPoemIdx||0) + 1) % POEMS.length); };
 
         /* ── SEARCH ── */
         function openSearch() { document.getElementById('searchOverlay').classList.add('open'); document.getElementById('srchInput').focus(); document.body.style.overflow='hidden'; }
@@ -1025,7 +1157,84 @@
             document.getElementById('yr').textContent = new Date().getFullYear();
             initData(); 
             goTo('home');
+            initParticles();
+            initScrollEffects();
+            initCursorTrail();
         });
+
+        /* ── PARTICLE CANVAS ── */
+        function initParticles() {
+            const canvas = document.getElementById('heroCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let W, H, particles = [];
+            function resize() {
+                W = canvas.width = canvas.offsetWidth;
+                H = canvas.height = canvas.offsetHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+            class Particle {
+                constructor() { this.reset(); }
+                reset() {
+                    this.x = Math.random() * W;
+                    this.y = Math.random() * H;
+                    this.r = Math.random() * 1.5 + 0.3;
+                    this.alpha = Math.random() * 0.5 + 0.1;
+                    this.vx = (Math.random() - 0.5) * 0.3;
+                    this.vy = (Math.random() - 0.5) * 0.3 - 0.1;
+                    this.life = 1;
+                    this.decay = Math.random() * 0.003 + 0.001;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212,175,55,${this.alpha * this.life})`;
+                    ctx.fill();
+                }
+                update() {
+                    this.x += this.vx; this.y += this.vy;
+                    this.life -= this.decay;
+                    if (this.life <= 0 || this.x < 0 || this.x > W || this.y < 0) this.reset();
+                    this.draw();
+                }
+            }
+            for (let i = 0; i < 80; i++) particles.push(new Particle());
+            function loop() {
+                ctx.clearRect(0, 0, W, H);
+                particles.forEach(p => p.update());
+                requestAnimationFrame(loop);
+            }
+            loop();
+        }
+
+        /* ── SCROLL EFFECTS: PROGRESS BAR + NAV ── */
+        function initScrollEffects() {
+            window.addEventListener('scroll', () => {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+                const bar = document.getElementById('readProgress');
+                if (bar) bar.style.width = pct + '%';
+                const nav = document.getElementById('nav');
+                if (nav) nav.classList.toggle('scrolled', scrollTop > 40);
+            }, { passive: true });
+        }
+
+        /* ── CURSOR SPARKLE TRAIL ── */
+        function initCursorTrail() {
+            if (!window.matchMedia('(pointer: fine)').matches) return;
+            document.addEventListener('mousemove', (e) => {
+                if (Math.random() > 0.3) return;
+                const s = document.createElement('div');
+                s.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:3px;height:3px;border-radius:50%;background:rgba(212,175,55,0.6);pointer-events:none;z-index:9995;transform:translate(-50%,-50%);transition:all 0.8s ease;`;
+                document.body.appendChild(s);
+                requestAnimationFrame(() => { s.style.opacity = '0'; s.style.transform = 'translate(-50%,-50%) scale(2)'; });
+                setTimeout(() => s.remove(), 800);
+            });
+        }
+
+        /* ── POEM READER PREV/NEXT already defined above ── */
     </script>
 
     <script type="module">
